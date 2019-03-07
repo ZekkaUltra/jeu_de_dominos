@@ -4,7 +4,7 @@ dominos[1]="Dominos/[5,6].png"; //(l'index étant sa position),
 dominos[2]="Dominos/[5,5].png";  //0 corrsespond au premier élément
 dominos[3]="Dominos/[4,6].png";  //1 au deuxième,etc ...
 dominos[4]="Dominos/[4,5].png"; 
-dominos[5]="Dominos/[4,4].png"; 
+dominos[5]="Dominos/[4,4].png";
 dominos[6]="Dominos/[3,6].png"; 
 dominos[7]="Dominos/[3,5].png"; 
 dominos[8]="Dominos/[3,4].png"; 
@@ -50,9 +50,13 @@ distributionMode1(selectedHand2); //même chose pour le deuxième tableau
 console.log(selectedHand1); //on vérifie que le tableau est bien rempli
 console.log(selectedHand2); //même chose
 console.log(dominos); //ça se passe dans l'inspecteur côté console, et puis normalement le domino sélectionné n'est plus dans le tableau principal "dominos"
-document.getElementById("zone1").innerHTML = '<img src="' + selectedHand1.join('" /><img src="') + '" />';
+//document.getElementById("zone1").innerHTML = '<img src="' + selectedHand1.join('" /><img src="') + '" />';
+document.getElementById("zone1").innerHTML = "";
+for(var i=0;i < selectedHand1.length; i++){ document.getElementById("zone1").insertAdjacentHTML('afterbegin', '<img id="j1Domino'+ i +'" class="domino" src="' + selectedHand1[i] + '"onclick="selec(event)"/>');
+}
 document.getElementById("zone2").innerHTML = '<img src="' + selectedHand2.join('" /><img src="') + '" />';
 
+    
 var btn1 = document.getElementById("mode1");
 var btn2 = document.getElementById("mode2");
 var btn3 = document.getElementById("mode3");
@@ -66,7 +70,7 @@ btn1.addEventListener ("click", function() {
    } else {
        document.getElementById("mode2joueurs").style.display = "none";
    }
-   
+
 });
 btn2.addEventListener ("click", function() {
     var displayMode2 = document.getElementById("mode3joueurs").style.display;
@@ -101,14 +105,22 @@ btn4.addEventListener ("click", function() {
     document.getElementById("zone1").innerHTML = '<img src="' + selectedHand1.join('" /><img src="') + '" />';
     
 });
-var img = document.getElementsByTagName("img");
-var board = document.getElementById("#board");
-
-board.addEventListener("click", function(event) {
-	var xPosition = event.clientX - board.getBoundingClientRect().left - (img.clientWidth / 2);
-	var yPosition = event.clientY - board.getBoundingClientRect().top - (img.clientHeight / 2);
-	// in case of a wide border, the boarder-width needs to be considered in the formula above
-	img.style.left = xPosition + "px";
-	img.style.top = yPosition + "px";
-	}
-);
+var ledomino;
+function selec(event) {
+   var board = document.getElementById("board");
+    //
+    ledomino = event.target.getAttribute("id")
+    console.log(event.target.getAttribute("id"));
+   board.addEventListener("dblclick", move);
+}
+function move(event) {
+    board.appendChild(document.getElementById(ledomino));
+    var x = event.clientX;
+    var y = event.clientY;
+var img = document.getElementById(ledomino);
+  img.style.position = "absolute";
+  img.style.left = x + "px";
+  img.style.top = y + "px";
+  document.getElementById(ledomino).removeAttribute("onclick");
+  board.removeEventListener("dblclick", move);   
+}

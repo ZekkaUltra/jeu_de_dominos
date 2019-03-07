@@ -5,13 +5,10 @@ body {
     float: right;
 }
 #board {
-    position: relative;
-    top: 0px;
-    left: 0px;
-    height: 600px;
-    border: 1px black solid;
-    cursor: pointer;
+    height: 560px;
+    border: 1px black solid;  
 }
+
 #mode2joueurs {
     display: none; 
 }
@@ -35,16 +32,12 @@ body {
     left: 0px;
     
 }
-#zone1 img {
-    width: 20%;
-    height: auto;
+.domino {
+    width: 20px;
+    height: 40px;
     transform: rotate(90deg);
-    position : relative;
-    top: 0px;
-    left: 0px;
-    transition: left .5s cubic-bezier(.42,-0.3,.78,1.25), 
-			top .5s cubic-bezier(.42,-0.3,.78,1.25);
 }
+
 #zone2 {
     display: flex;
     flex-direction: column;
